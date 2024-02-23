@@ -1,0 +1,12 @@
+#!/bin/bash
+# Get the PID of the current script
+SCRIPT_PID=$$
+# Get the PID and process name of processes containing the word "bash"
+pid_name=$(grep -l "bash" /proc/*/comm | awk -F/ '{print $3}')
+# Loop through each PID and print the PID and process name
+for pid in $pid_name; do
+	if [ "$pid" != "$SCRIPT_PID" ]; then
+		name=$(cat "/proc/$pid/comm")
+		echo "$pid $name"
+	fi
+done
