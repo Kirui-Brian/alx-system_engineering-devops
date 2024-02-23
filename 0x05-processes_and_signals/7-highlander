@@ -1,4 +1,7 @@
 #!/bin/bash
+
+trap 'echo "I am invincible!!!"' SIGTERM
+
 while true; do
 	echo "To infinity and beyond"
 	sleep 2
