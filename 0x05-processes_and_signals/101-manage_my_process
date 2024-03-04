@@ -21,7 +21,7 @@ start_process() {
         exit 1
     fi
 
-    ./"$PROCESS_NAME" &  # Start the process in the background
+    ./manage_my_process &  # Start the process in the background
     echo "$!" > "$PID_FILE"  # Store the PID of the process
     echo "$PROCESS_NAME started"
 }
