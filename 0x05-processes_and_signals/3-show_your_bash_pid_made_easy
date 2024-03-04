@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Get the PID of the current script
 SCRIPT_PID=$$
 # Get the PID and process name of processes containing the word "bash"
