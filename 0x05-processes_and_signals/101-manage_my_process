@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Check if the script is run as root 
 if [ "$(id -u)" != "0" ]; then
 	echo "Error: This script must be run as root" 1>&2
