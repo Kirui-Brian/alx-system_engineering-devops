@@ -1,28 +1,7 @@
 #!/usr/bin/env bash
-# Bash script that:
 
-# Indefinitely writes I am alive! to the file /tmp/my_process
-# In between every I am alive! message, the program should pause for 2 seconds
-
-case "$1" in
-    start)
-        ./manage_my_process &
-        echo $! > /var/run/my_process.pid
-        echo "manage_my_process started"
-        ;;
-    stop)
-        kill $(cat /var/run/my_process.pid)
-        rm /var/run/my_process.pid
-        echo "manage_my_process stopped"
-        ;;
-    restart)
-        kill $(cat /var/run/my_process.pid)
-        rm /var/run/my_process.pid
-        ./manage_my_process &
-        echo $! > /var/run/my_process.pid
-        echo "manage_my_process restarted"
-        ;;
-    *)
-        exit 1
-        ;;
-esac
+# Infinite loop to write "I am alive!" to /tmp/my_process
+while true; do
+    echo "I am alive!" >> /tmp/my_process
+    sleep 2
+done

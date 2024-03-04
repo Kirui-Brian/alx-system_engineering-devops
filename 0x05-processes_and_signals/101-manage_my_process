@@ -1,15 +1,64 @@
 #!/usr/bin/env bash
-# Check if the script is run as root 
+
+# Check if the script is run as root
 if [ "$(id -u)" != "0" ]; then
-	echo "Error: This script must be run as root" 1>&2
-	exit
+    echo "Error: This script must be run as root" >&2
+    exit 1
 fi
 
 # Check the number of arguments
 if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 {start|stop|restart}"
-	exit  1
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
 fi
 
-# Execute manage_my_process script with the specified argument
-./manage_my_process "$1"
+# Define the process name and PID file
+PROCESS_NAME="manage_my_process"
+PID_FILE="/var/run/my_process.pid"
+
+start_process() {
+    if [ -f "$PID_FILE" ]; then
+        echo "$PROCESS_NAME is already running." >&2
+        exit 1
+    fi
+
+    ./"$PROCESS_NAME" &  # Start the process in the background
+    echo "$!" > "$PID_FILE"  # Store the PID of the process
+    echo "$PROCESS_NAME started"
+}
+
+stop_process() {
+    if [ ! -f "$PID_FILE" ]; then
+        echo "$PROCESS_NAME is not running." >&2
+        exit 1
+    fi
+
+    pid=$(cat "$PID_FILE")
+    kill "$pid"  # Send SIGTERM to the process
+    rm "$PID_FILE"  # Remove the PID file
+    echo "$PROCESS_NAME stopped"
+}
+
+restart_process() {
+    stop_process
+    start_process
+    echo "$PROCESS_NAME restarted"
+}
+
+case "$1" in
+    start)
+        start_process
+        ;;
+    stop)
+        stop_process
+        ;;
+    restart)
+        restart_process
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
