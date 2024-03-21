@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Displaying the content of /etc/passwd, parsing and displaying only username, user id, and home directory path for each user
-while IFS=: read -r username _ uid _ _ home _; do
-    echo "$username:$uid:$home"
-done < /etc/passwd
+# Displaying the content of /etc/passwd, parsing and 
+# displaying only username, user id, and home directory path for each user
+
+while read passwd; do
+	echo "$passwd" | cut -d ':' -f1,3,6
+done < "/etc/passwd"
