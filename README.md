@@ -1,1 +1,1 @@
-Shell basics and bash projecst
+# Shell basics and bash projecst
