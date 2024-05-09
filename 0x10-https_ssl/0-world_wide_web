@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
-# Usage: ./0-world_wide_web <domain> <subdomain>
-# Display information about subdomains.
+# Function to get DNS record information
+get_dns_record() {
+  local domain=$1
+  local subdomain=$2
+  local record_info=$(dig +short "$subdomain.$domain" A)
 
-print_domain_subdomain () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
+  if [[ -z "$record_info" ]]; then
+    echo "The subdomain $subdomain does not have an A record."
+  else
+    echo "The subdomain $subdomain is a A record and points to $record_info"
+  fi
 }
 
-if [ "$#" -eq 2 ]
-then
-    print_domain_subdomain "$2.$1" "$2"
+# Main script execution
+domain=$1
+subdomain=$2
+
+if [[ -z "$subdomain" ]]; then
+  # Display information for default subdomains
+  for sub in www lb-01 web-01 web-02; do
+    get_dns_record "$domain" "$sub"
+  done
 else
-    print_domain_subdomain "www.$1" "www"
-    print_domain_subdomain "lb-01.$1" "lb-01"
-    print_domain_subdomain "web-01.$1" "web-01"
-    print_domain_subdomain "web-02.$1" "web-02"
+  # Display information for specified subdomain
+  get_dns_record "$domain" "$subdomain"
 fi
