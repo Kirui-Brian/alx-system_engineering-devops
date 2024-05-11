@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Install Nginx using apt-get
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Create a simple HTML file
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Disable default Nginx configuration
+sudo unlink /etc/nginx/sites-enabled/default
+
+# Create a new Nginx server block file
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /var/www/html;
+	index index.html;
+
+	server_name _;
+
+	location / {
+		try_files \$uri/ =404;
+}
+}" | sudo tee /etc/nginx/sites-available/hello_world
+
+# Enable the new server block
+sudo ln -s /etc/nginx/sites-available/hello_world/etc/nginx/sites-enabled/
+
+# Reload Nginx to apply the changes (without using systemctl)
+sudo service nginx reload
