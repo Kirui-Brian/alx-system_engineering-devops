@@ -1,4 +1,4 @@
-# Puppet manifest to install and configure Nginx
+# This Puppet manifest installs and configures Nginx to serve a 'Hello World!' page and redirect '/redirect_me' with a 301 response.
 class nginx_setup {
   package { 'nginx':
     ensure => installed,
@@ -12,9 +12,4 @@ class nginx_setup {
 
   file { '/var/www/html/index.html':
     ensure  => file,
-    content => '<html>\n<head>\n<title>Hello World</title>\n</head>\n<body>\nHello World!\n</body>\n</html>\n',
-    require => Package['nginx'],
-  }
-
-  file { '/etc/nginx/sites-available/default':
-    ensure
+    content => '<html>\n<head>\n<title>Hello World
