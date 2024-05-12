@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script installs and configures Nginx to serve 'Hello World' at the root URL.
 # Install Nginx using apt-get
 sudo apt-get update
 sudo apt-get install -y nginx
@@ -6,11 +7,9 @@ sudo apt-get install -y nginx
 # Create a simple HTML file
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Disable default Nginx configuration
-sudo unlink /etc/nginx/sites-enabled/default
-
-# Create a new Nginx server block file
-echo "server {
+# Configure Nginx to serve the 'Hello World!' page.
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
+server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
@@ -21,11 +20,9 @@ echo "server {
 
 	location / {
 		try_files \$uri/ =404;
+	}
 }
-}" | sudo tee /etc/nginx/sites-available/hello_world
-
-# Enable the new server block
-sudo ln -s /etc/nginx/sites-available/hello_world/etc/nginx/sites-enabled/
+EOF
 
 # Reload Nginx to apply the changes (without using systemctl)
 sudo service nginx reload
