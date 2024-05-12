@@ -19,4 +19,11 @@ server {
     index index.html;
     server_name _;
 
-    location /redirect
+    location /redirect_me {
+        return 301 https://www.example.com;
+    }
+}
+EOF
+
+# Reload Nginx to apply the changes
+sudo nginx -s reload
