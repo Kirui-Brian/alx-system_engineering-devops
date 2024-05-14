@@ -2,7 +2,7 @@
 # Configures Nginx to redirect /redirect_me to another page with a 301 Moved Permanently response
 
 # Install Nginx if it's not already installed
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y nginx
 
 # Start Nginx if it's not already running
@@ -10,32 +10,8 @@ if ! sudo service nginx status; then
     sudo service nginx start
 fi
 
-# Check if the redirection rule exists
-REDIRECT_EXISTS=$(grep -c "location /redirect_me" /etc/nginx/sites-available/default)
-
 # Configure Nginx to add redirect rule if not exists
-if [ $REDIRECT_EXISTS -eq 0 ]; then
-    sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    root /var/www/html;
-    index index.html;
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}
-EOF
-    echo "Redirection rule for /redirect_me added."
-else
-    echo "Redirection rule for /redirect_me already exists, no changes made."
-fi
+sudo sed -i '/server_name _;/a \\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}' /etc/nginx/sites-available/default
 
 # Reload Nginx configuration (without using systemctl)
 sudo service nginx reload
