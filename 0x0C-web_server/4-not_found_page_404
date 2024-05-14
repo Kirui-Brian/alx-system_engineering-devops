@@ -7,7 +7,7 @@ sudo apt-get install -y nginx
 
 # Configure Nginx to add redirect rule if not exists
 echo 'Hello World!' > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/not_found_404.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
 # Update config file to redirect
 printf %s "server {
@@ -20,8 +20,8 @@ printf %s "server {
         	return 301 http://google.com/;
 	}
 
-	error_page 404 /not_found_404.html;
-	location /not_found_404 {
+	error_page 404 /404.html;
+	location /404 {
 		root /var/www/html;
 		internal;
 	}
