@@ -20,7 +20,7 @@ class nginx_setup {
 
   file { '/etc/nginx/sites-available/default':
     ensure  => file,
-    content => template('nginx/default.conf.erb'),
+    content => template('/etc/nginx/sites-available/default'),
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
