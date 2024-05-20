@@ -1,14 +1,20 @@
 #!/usr/bin/python3
 """
-Gather data from a REST API and export TODO list progress
-for a given employee ID to a CSV file
+Module: export_to_CSV
+
+This module retrieves data from a REST API and exports the TODO list progress
+for a given employee ID to a CSV file.
 """
 
 import csv
 import requests
 import sys
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function to fetch user information and TODO list data,
+    process it, and export it to a CSV file.
+    """
     if len(sys.argv) != 2:
         print("Usage: {} <employee_id>".format(sys.argv[0]))
         sys.exit(1)
@@ -21,9 +27,9 @@ if __name__ == "__main__":
 
     # Fetch user information
     user_url = (
-            "https://jsonplaceholder.typicode.com/
-            users/{}".format(employee_id)
-            )
+        "https://jsonplaceholder.typicode.com/"
+        f"users/{employee_id}"
+    )
     user_response = requests.get(user_url)
     if user_response.status_code != 200:
         print("User not found")
@@ -32,9 +38,9 @@ if __name__ == "__main__":
 
     # Fetch TODO list
     todos_url = (
-            "https://jsonplaceholder.typicode.com/users/{}/
-            todos".format(employee_id)
-            )
+        "https://jsonplaceholder.typicode.com/users/"
+        f"{employee_id}/todos"
+    )
     todos_response = requests.get(todos_url)
     if todos_response.status_code != 200:
         print("Error fetching TODO list")
@@ -45,7 +51,7 @@ if __name__ == "__main__":
     employee_username = user_data.get("username")
 
     # CSV file name
-    csv_filename = "{}.csv".format(employee_id)
+    csv_filename = f"{employee_id}.csv"
 
     # Write to CSV file
     with open(csv_filename, mode='w', newline='') as file:
@@ -56,4 +62,7 @@ if __name__ == "__main__":
                 employee_username,
                 task.get("completed"),
                 task.get("title")
-                ])
+            ])
+
+if __name__ == "__main__":
+    main()
