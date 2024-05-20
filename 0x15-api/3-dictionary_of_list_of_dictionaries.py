@@ -31,7 +31,7 @@ OUTPUT_FILE = 'todo_all_employees.json'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s')
+    format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def fetch_data(url):
@@ -65,7 +65,7 @@ def main():
     # Fetch data from the API endpoints
     logging.info("Fetching users data...")
     users = fetch_data(USERS_URL)
-    
+
     logging.info("Fetching todos data...")
     todos = fetch_data(TODOS_URL)
 
