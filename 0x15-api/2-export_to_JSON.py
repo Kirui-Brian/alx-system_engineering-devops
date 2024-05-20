@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Gather data from a REST API and export TODO list progress for a given employee ID to a JSON file
+Gather data from a REST API and export TODO list progress
+for a given employee ID to a JSON file
 """
 
 import json
@@ -19,7 +20,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Fetch user information
-    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
+    user_url =
+    "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
     user_response = requests.get(user_url)
     if user_response.status_code != 200:
         print("User not found")
@@ -27,7 +29,8 @@ if __name__ == "__main__":
     user_data = user_response.json()
 
     # Fetch TODO list
-    todos_url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(employee_id)
+    todos_url =
+    "https://jsonplaceholder.typicode.com/users/{}/todos".format(employee_id)
     todos_response = requests.get(todos_url)
     if todos_response.status_code != 200:
         print("Error fetching TODO list")
