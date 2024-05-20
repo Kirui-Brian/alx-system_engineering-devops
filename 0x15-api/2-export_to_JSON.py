@@ -39,7 +39,9 @@ def fetch_todo_list(employee_id):
     Returns:
         list: The TODO list data.
     """
-    todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    todos_url = (
+            f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+            )
     todos_response = requests.get(todos_url)
     if todos_response.status_code != 200:
         print("Error fetching TODO list")
