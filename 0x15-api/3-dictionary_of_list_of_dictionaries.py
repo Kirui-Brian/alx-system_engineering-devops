@@ -30,8 +30,10 @@ TODOS_URL = "https://jsonplaceholder.typicode.com/todos"
 OUTPUT_FILE = 'todo_all_employees.json'
 
 # Configure logging
-logging.basicConfig(level=logging.INFO,
-format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+        )
 
 
 def fetch_data(url):
