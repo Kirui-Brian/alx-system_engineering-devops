@@ -10,6 +10,7 @@ import csv
 import requests
 import sys
 
+
 def main():
     """
     Main function to fetch user information and TODO list data,
@@ -63,6 +64,7 @@ def main():
                 task.get("completed"),
                 task.get("title")
             ])
+
 
 if __name__ == "__main__":
     main()
