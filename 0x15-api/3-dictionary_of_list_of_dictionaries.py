@@ -31,7 +31,7 @@ OUTPUT_FILE = 'todo_all_employees.json'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s')
+format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def fetch_data(url):
