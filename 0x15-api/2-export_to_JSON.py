@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 """
-Module: todo_exporter.py
+Module: export_to_JSON
 
 This module retrieves data from a REST API and exports the TODO list progress
 for a given employee ID to a JSON file.
-
-Usage: python3 todo_exporter.py <employee_id>
 """
 
 import json
 import requests
 import sys
+
 
 def fetch_user_data(employee_id):
     """
@@ -29,6 +28,7 @@ def fetch_user_data(employee_id):
         sys.exit(1)
     return user_response.json()
 
+
 def fetch_todo_list(employee_id):
     """
     Fetch the TODO list for the given employee from the REST API.
@@ -45,6 +45,7 @@ def fetch_todo_list(employee_id):
         print("Error fetching TODO list")
         sys.exit(1)
     return todos_response.json()
+
 
 if __name__ == "__main__":
     # Validate command line arguments
